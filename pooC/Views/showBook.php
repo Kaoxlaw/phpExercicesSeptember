@@ -6,6 +6,8 @@
         <th scope="col">Title</th>
         <th scope="col">Author</th>
         <th scope="col">Resume</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +18,8 @@
         echo "<td>" . $book->getTitle() . "</td>";
         echo "<td>" . $book->getAuthor() . "</td>";
         echo "<td>" . $book->getResume() . "</td>";
+        echo "<td> <img src='./Ressources/icons/edit.png' style='width:30px;height:30px;'></td>";
+        echo "<td> <img src='./Ressources/icons/delete.png' style='width:30px;height:30px;'></td>";
         echo "</tr>";
       }
       ?>

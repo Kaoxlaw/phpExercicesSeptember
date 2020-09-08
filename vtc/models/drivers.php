@@ -47,7 +47,6 @@ class Drivers
     $bdd = $this->getConnection();
     $sql = $bdd->prepare(" INSERT INTO drivers (firstName, lastName) VALUES ('$firstName', '$lastName') ");
 
-    $sql->execute();
 
     if (!$sql->execute()) {
       die("Not WOrking Bro!");

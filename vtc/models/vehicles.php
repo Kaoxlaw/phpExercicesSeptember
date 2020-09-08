@@ -62,12 +62,11 @@ class Vehicles
     }
     return $bdd;
   }
+
   public function create($brand, $models, $color, $registration)
   {
     $bdd = $this->getConnection();
     $sql = $bdd->prepare(" INSERT INTO vehicles (brand, models, color, registration) VALUES ('$brand', '$models', '$color', '$registration') ");
-
-    $sql->execute();
 
     if (!$sql->execute()) {
       die("Not WOrking Bro!");

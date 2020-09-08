@@ -43,8 +43,8 @@ class Book
     try {
       $bdd = new PDO(
         'mysql:host=localhost;dbname=biblio',
-        'afpaphp',
-        'afpaphp'
+        "afpaphp",
+        "afpaphp"
       );
     } catch (PDOException $e) {
       print "Erreur";
@@ -55,11 +55,24 @@ class Book
   public function insert($title, $author, $resume)
   {
     $bdd = $this->getConnection();
-    $sql = $bdd->prepare("INSERT INTO book (title, author, resume) VALUES ('$title', '$author', '$resume')");
+    $sql = $bdd->prepare(" INSERT INTO book (title, author, resume) VALUES ('$title', '$author', '$resume') ");
+
+    $sql->execute();
 
     if (!$sql->execute()) {
       die("Not WOrking Bro!");
     }
     header("Location: index.php");
+  }
+
+  public function display()
+  {
+    $bdd = $this->getConnection();
+    $sql = $bdd->prepare(" SELECT * FROM book ");
+
+    $sql->execute();
+
+    $result = $sql->fetchAll(PDO::FETCH_CLASS, 'Book');
+    return $result;
   }
 }

@@ -9,5 +9,5 @@ if (isset($_GET['action'])) {
     $book->add();
   }
 } else {
-  var_dump('liste');
+  $book->displayBook();
 }

@@ -4,8 +4,6 @@ class BookControllers
 {
   public function add()
   {
-    var_dump('My role is to add some books in mysql');
-
     require_once './Views/addBook.html';
 
     $book = new Book();
@@ -16,5 +14,13 @@ class BookControllers
 
       $book->insert($title, $author, $resume);
     }
+  }
+  public function displayBook()
+  {
+    $book = new Book();
+
+    $list = $book->display();
+
+    require_once './Views/showBook.php';
   }
 }

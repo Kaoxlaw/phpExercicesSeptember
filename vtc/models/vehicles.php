@@ -1,6 +1,6 @@
 <?php
-
-class Vehicles
+require_once 'models.php';
+class Vehicles extends Models
 {
   private $id_vehicles;
   private $brand;
@@ -49,23 +49,9 @@ class Vehicles
     return $this->registration = $registration;
   }
 
-  public function getConnection()
-  {
-    try {
-      $bdd = new PDO(
-        'mysql:host=localhost;dbname=vtc',
-        "afpaphp",
-        "afpaphp"
-      );
-    } catch (PDOException $e) {
-      print "Erreur";
-    }
-    return $bdd;
-  }
-
   public function create($brand, $models, $color, $registration)
   {
-    $bdd = $this->getConnection();
+    $bdd = Models::getConnection();
     $sql = $bdd->prepare(" INSERT INTO vehicles (brand, models, color, registration) VALUES ('$brand', '$models', '$color', '$registration') ");
 
     if (!$sql->execute()) {

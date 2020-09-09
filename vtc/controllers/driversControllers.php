@@ -20,31 +20,31 @@ class DriversControllers
   {
     $drivers = new Drivers();
 
-    $list = $drivers->display();
+    $list = $drivers->display('drivers');
 
     require_once './views/drivers/drivers.php';
   }
 
-  // public function updateDrivers()
-  // {
-  //   require_once './views/updateDrivers.php';
+  public function show($id)
+  {
+    $drivers = new Drivers();
+    $driversById = $drivers->findById($id, 'drivers');
 
-  //   $drivers = new Drivers();
-  //   if (isset($_POST['modify'])) {
-  //     $firstName = $drivers->setFirstName($_POST['firstName']);
-  //     $lastName = $drivers->setLastName($_POST['lastName']);
+    require_once './views/drivers/updateDrivers.php';
 
-  //     $drivers->modify($firstName, $lastName);
-  //   }
-  // }
+    if (isset($_POST['modify'])) {
+      foreach ($driversById as $value) {
+        $firstName = $value->setFirstName($_POST['firstName']);
+        $lastName = $value->setLastName($_POST['lastName']);
 
-  // public function deleteDrivers()
-  // {
-  //   $drivers = new Drivers();
+        $value->update($id, $firstName, $lastName);
+      }
+    }
+  }
 
-  //   $id = $drivers->getId($_GET['id']);
-  //   $drivers->delete($id);
-
-  //   require_once './views/drivers.php';
-  // }
+  public function delete($id)
+  {
+    $drivers = new Drivers();
+    return $drivers->deleteById($id, 'drivers');
+  }
 }

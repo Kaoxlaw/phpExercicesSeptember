@@ -1,6 +1,6 @@
 <?php
-
-class Association
+require_once 'models.php';
+class Association extends Models
 {
   private $id_association;
   private $drivers;
@@ -29,23 +29,9 @@ class Association
     return $this->vehicles = $vehicles;
   }
 
-  public function getConnection()
-  {
-    try {
-      $bdd = new PDO(
-        'mysql:host=localhost;dbname=vtc',
-        "afpaphp",
-        "afpaphp"
-      );
-    } catch (PDOException $e) {
-      print "Erreur";
-    }
-    return $bdd;
-  }
-
   public function create($drivers, $vehicles)
   {
-    $bdd = $this->getConnection();
+    $bdd = Models::getConnection();
     $sql = $bdd->prepare(" INSERT INTO association (drivers, vehicules) VALUES ('$drivers', '$vehicles') ");
 
     if (!$sql->execute()) {

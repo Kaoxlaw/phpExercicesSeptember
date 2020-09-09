@@ -1,14 +1,14 @@
 <?php
-
-class Drivers
+require_once 'models.php';
+class Drivers extends Models
 {
-  private $id;
+  private $id_drivers;
   private $firstName;
   private $lastName;
 
-  public function getId()
+  public function getIdDrivers()
   {
-    return $this->id;
+    return $this->id_drivers;
   }
 
   public function getFirstName()
@@ -29,22 +29,9 @@ class Drivers
     return $this->lastName = $lastName;
   }
 
-  public function getConnection()
-  {
-    try {
-      $bdd = new PDO(
-        'mysql:host=localhost;dbname=vtc',
-        "afpaphp",
-        "afpaphp"
-      );
-    } catch (PDOException $e) {
-      print "Erreur";
-    }
-    return $bdd;
-  }
   public function create($firstName, $lastName)
   {
-    $bdd = $this->getConnection();
+    $bdd = Models::getConnection();
     $sql = $bdd->prepare(" INSERT INTO drivers (firstName, lastName) VALUES ('$firstName', '$lastName') ");
 
 
@@ -54,37 +41,25 @@ class Drivers
     header("Location: index.php");
   }
 
-  public function display()
+  public function display($table)
   {
-    $bdd = $this->getConnection();
-    $sql = $bdd->prepare(" SELECT * FROM drivers ");
+    $bdd = Models::getConnection();
+    $sql = $bdd->prepare(" SELECT * FROM $table ");
 
     $sql->execute();
 
-    $result = $sql->fetchAll(PDO::FETCH_CLASS, 'Drivers');
+    $result = $sql->fetchAll(PDO::FETCH_CLASS, $table);
     return $result;
   }
 
-  // public function modify($firstName, $lastName)
-  // {
-  //   $bdd = $this->getConnection();
-  //   $sql = $bdd->prepare(" UPDATE drivers SET firstName = '$firstName', lastName = '$lastName' ");
+  public function update($id, $firstName, $lastName)
+  {
+    $bdd = Models::getConnection();
+    $sql = $bdd->prepare(" UPDATE drivers SET firstName = '" . $firstName . "', lastName = '" . $lastName . "' WHERE id_drivers = " . $id);
 
-  //   $sql->execute($_GET['id']);
-
-  //   // $result = $sql->fetch(PDO::FETCH_ASSOC);
-
-  //   if (!$sql->execute()) {
-  //     die("Not WOrking Bro!");
-  //   }
-  //   header("Location: index.php");
-  // }
-
-  // public function delete($id)
-  // {
-  //   $bdd = $this->getConnection();
-  //   $sql = $bdd->prepare(" DELETE FROM `drivers` WHERE id = '$id' ");
-
-  //   $sql->execute();
-  // }
+    if (!$sql->execute()) {
+      die("Not WOrking Bro!");
+    }
+    header("Location: index.php");
+  }
 }

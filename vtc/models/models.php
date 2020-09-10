@@ -28,6 +28,17 @@ class Models
     return $result;
   }
 
+  public function display($table)
+  {
+    $bdd = $this->getConnection();
+    $sql = $bdd->prepare(" SELECT * FROM $table ");
+
+    $sql->execute();
+
+    $result = $sql->fetchAll(PDO::FETCH_CLASS, $table);
+    return $result;
+  }
+
   public function deleteById($id, $table)
   {
     $bdd = $this->getConnection();

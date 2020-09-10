@@ -57,17 +57,18 @@ class Vehicles extends Models
     if (!$sql->execute()) {
       die("Not WOrking Bro!");
     }
-    header("Location: vehicles.php");
+    header("Location: index.php?action=addVehicles");
   }
 
-  public function display()
+  public function update($id, $brand, $models, $color, $registration)
   {
-    $bdd = $this->getConnection();
-    $sql = $bdd->prepare(" SELECT * FROM vehicles ");
+    $bdd = Models::getConnection();
+    $sql = $bdd->prepare(" UPDATE vehicles SET brand = '" . $brand . "', models = '" . $models . "'
+    , color = '" . $color . "', registration = '" . $registration . "' WHERE id_vehicles = " . $id);
 
-    $sql->execute();
-
-    $result = $sql->fetchAll(PDO::FETCH_CLASS, 'Vehicles');
-    return $result;
+    if (!$sql->execute()) {
+      die("Not WOrking Bro!");
+    }
+    header("Location: index.php?action=addVehicles");
   }
 }

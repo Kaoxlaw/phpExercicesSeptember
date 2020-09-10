@@ -41,17 +41,6 @@ class Drivers extends Models
     header("Location: index.php");
   }
 
-  public function display($table)
-  {
-    $bdd = Models::getConnection();
-    $sql = $bdd->prepare(" SELECT * FROM $table ");
-
-    $sql->execute();
-
-    $result = $sql->fetchAll(PDO::FETCH_CLASS, $table);
-    return $result;
-  }
-
   public function update($id, $firstName, $lastName)
   {
     $bdd = Models::getConnection();

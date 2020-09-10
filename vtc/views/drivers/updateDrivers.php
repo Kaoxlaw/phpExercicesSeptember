@@ -1,6 +1,6 @@
-  <?php
-  foreach ($driversById as $drivers) {
-  ?>
+<?php
+foreach ($driversById as $drivers) {
+?>
   <div class="container">
     <form method="post">
       <div class="form-group">
@@ -15,6 +15,6 @@
       <button type="submit" class="btn btn-primary" name="modify">Modify Drivers!</button>
     </form>
   </div>
-  <?php
-  }
-  ?>
+<?php
+}
+?>

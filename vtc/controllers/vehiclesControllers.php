@@ -22,8 +22,33 @@ class VehiclesControllers
   {
     $vehicles = new Vehicles();
 
-    $list = $vehicles->display();
+    $list = $vehicles->display('vehicles');
 
     require_once './views/vehicles/vehicles.php';
+  }
+
+  public function show($id)
+  {
+    $vehicles = new Vehicles();
+    $vehiclesById = $vehicles->findById($id, 'vehicles');
+
+    require_once './views/vehicles/updateVehicles.php';
+
+    if (isset($_POST['modify'])) {
+      foreach ($vehiclesById as $value) {
+        $brand = $value->setBrand($_POST['brand']);
+        $models = $value->setModels($_POST['models']);
+        $color = $value->setColor($_POST['color']);
+        $registration = $value->setRegistration($_POST['registration']);
+
+        $value->update($id, $brand, $models, $color, $registration);
+      }
+    }
+  }
+
+  public function delete($id)
+  {
+    $vehicles = new Vehicles();
+    return $vehicles->deleteById($id, 'vehicles');
   }
 }
